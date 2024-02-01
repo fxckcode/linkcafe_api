@@ -66,8 +66,8 @@ export const updateCommentById = async (req, res) => {
         const { comentario, id_usuario, id_publicacion } = req.body
         const [oldComment] = await pool.query('select * from comentarios where id=?', [id])
         const [result] = await pool.query(`update comentarios set 
-                                                comentario=${comentario ? comentario : oldComment[0].comentario} 
-                                                id_usuario=${id_usuario ? id_usuario : parseInt(oldComment[0].id_usuario)}
+                                                comentario='${comentario ? comentario : oldComment[0].comentario}',
+                                                id_usuario=${id_usuario ? id_usuario : parseInt(oldComment[0].id_usuario)},
                                                 id_publicacion=${id_publicacion ? id_publicacion : oldComment[0].id_publicacion}
                                                 where id=?`, [id])
 

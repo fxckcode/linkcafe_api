@@ -66,11 +66,11 @@ export const updatePublicationById = async (req, res) => {
         const { nombre, descripcion, imagen, fuentes, tipo, id_usuario } = req.body
         const [oldPublication] = await pool.query('select * from publicaciones where id=?', [id])
         const [result] = await pool.query(`update publicaciones set 
-                                                nombre=${nombre ? nombre : oldPublication[0].nombre} 
-                                                descripcion=${descripcion ? descripcion : oldPublication[0].descripcion}
-                                                imagen=${imagen ? imagen : oldPublication[0].imagen}
-                                                fuentes=${fuentes ? fuentes : oldPublication[0].fuentes}
-                                                tipo=${tipo ? tipo : oldPublication[0].tipo}
+                                                nombre='${nombre ? nombre : oldPublication[0].nombre}',
+                                                descripcion='${descripcion ? descripcion : oldPublication[0].descripcion}',
+                                                imagen='${imagen ? imagen : oldPublication[0].imagen}',
+                                                fuentes='${fuentes ? fuentes : oldPublication[0].fuentes}',
+                                                tipo='${tipo ? tipo : oldPublication[0].tipo}',
                                                 id_usuario=${id_usuario ? id_usuario : parseInt(oldPublication[0].id_usuario)}
                                                 where id=?`, [id])
 

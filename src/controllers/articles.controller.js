@@ -21,8 +21,8 @@ export const getArticles = async (req, res) => {
 
 export const setArticles = async (req, res) => {
     try {
-        const { nombre, tipo, enlace, fecha, autor, id_usuario } = req.body
-        const [result] = await pool.query('insert into articulos(nombre, tipo, enlace, fecha, autor, id_usuario ) values (?, ?, ?, ?, ?, ?)', [nombre, tipo, enlace, fecha, autor, id_usuario])
+        const { nombre, tipo, enlace, autor, id_usuario } = req.body
+        const [result] = await pool.query('insert into articulos(nombre, tipo, enlace, autor, id_usuario ) values (?, ?, ?, ?, ?, ?)', [nombre, tipo, enlace, autor, id_usuario])
 
         if (result.affectedRows > 0) {
             res.status(200).json({
@@ -63,14 +63,13 @@ export const showArticleById = async (req, res) => {
 export const updateArticleById = async (req, res) => {
     try {
         const { id } = req.params;
-        const { nombre, tipo, enlace, fecha, autor, id_usuario } = req.body
+        const { nombre, tipo, enlace, autor, id_usuario } = req.body
         const [oldArticle] = await pool.query("select * from articulos where id=?", [id])
         const [result] = await pool.query(`update articulos set 
-                                                nombre=${nombre ? nombre : oldArticle[0].nombre} 
-                                                tipo=${tipo ? tipo : parseInt(oldArticle[0].tipo)}
-                                                enlace=${enlace ? enlace : oldArticle[0].enlace}
-                                                fecha=${fecha ? fecha : oldArticle[0].fecha}
-                                                autor=${autor ? autor : oldArticle[0].autor}
+                                                nombre='${nombre ? nombre : oldArticle[0].nombre}',
+                                                tipo='${tipo ? tipo : parseInt(oldArticle[0].tipo)}',
+                                                enlace='${enlace ? enlace : oldArticle[0].enlace}',
+                                                autor='${autor ? autor : oldArticle[0].autor}',
                                                 id_usuario=${id_usuario ? id_usuario : parseInt(oldArticle[0].id_usuario)}
                                                 where id=?`, [id])
 

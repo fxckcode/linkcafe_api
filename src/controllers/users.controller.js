@@ -66,9 +66,9 @@ export const updateUserById = async (req, res) => {
         const { nombre_completo, correo, clave } = req.body
         const [oldUser] = await pool.query("select * from usuarios where id=?", [id])
         const [result] = await pool.query(`update usuarios set 
-                                                nombre_completo=${nombre_completo ? nombre_completo : oldUser[0].nombre_completo} 
-                                                correo=${correo ? correo : oldUser[0].correo}
-                                                clave=${clave ? clave : oldUser[0].clave}
+                                                nombre_completo='${nombre_completo ? nombre_completo : oldUser[0].nombre_completo} ',
+                                                correo='${correo ? correo : oldUser[0].correo}',
+                                                clave='${clave ? clave : oldUser[0].clave}'
                                                 where id=?`, [id])
 
         if (result.affectedRows > 0) {
